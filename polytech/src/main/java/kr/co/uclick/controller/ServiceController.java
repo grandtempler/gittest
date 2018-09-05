@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.google.common.collect.Lists;
-
 import kr.co.uclick.entity.Phone;
 import kr.co.uclick.entity.User;
 import kr.co.uclick.service.PhoneService;
@@ -96,8 +94,7 @@ public class ServiceController {
 			int end   = (int)(start + pageable.getPageSize()) > users.size() ? users.size() : (start + pageable.getPageSize());
 			Page<User> pusers = new PageImpl<User>(users.subList(start, end), pageable, users.size());
 			users = pusers.getContent();
-			users = Lists.reverse(users);
-			
+
 		} else {
 			Page<User> pusers = userService.findAll(pageable);
 			count = userService.countAll();
@@ -237,22 +234,22 @@ public class ServiceController {
 		String phonealllist = param.get("phonealllist");
 		model.addAttribute("phonealllist", phonealllist);
 		
-//		try {
+		try {
 			PaginationVO paginationVO = setPaginationVO(searchusername, searchphonenumber, page, pageSize);
 			List<User> users = paginationVO.getUsers(); // 유저 리스트가 들어갈 리스트 users 를 세팅한다.
 
-			model.addAttribute("paginationVO", paginationVO); // paginationVO 객체를 넘겨줌
+			model.addAttribute("paginationVO", paginationVO ); // paginationVO 객체를 넘겨줌
 			
 			model.addAttribute("users", users );
 			return "redirect:user_1";
 			
-//		} catch (Exception e) {
-//			
-//			model.addAttribute("alertplace", "Phone Search");
-//			model.addAttribute("alertmessage", "리스트를 불러올 수 없습니다.");
-//			
-//			return "alert";
-//		}
+		} catch (Exception e) {
+			
+			model.addAttribute("alertplace", "Phone Search");
+			model.addAttribute("alertmessage", "리스트를 불러올 수 없습니다.");
+			
+			return "alert";
+		}
 	}
 	
 	@RequestMapping(value = "/user_insert", method = RequestMethod.POST)
