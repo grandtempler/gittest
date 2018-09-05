@@ -20,8 +20,7 @@ import org.jetbrains.annotations.NotNull;
 @TableGenerator(name="phone", table="pk_sequence", allocationSize=1)
 // Table명 : phone, id증가참조테이블 : pk_sequence, 증가사이즈 : 1
 @Table(name = "phone")
-//@Cacheable
-//@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONE)
 public class Phone {
 
 	@Id

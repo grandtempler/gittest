@@ -2,7 +2,6 @@ package kr.co.uclick.entity;
 
 import java.util.List;
 
-import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
-import javax.xml.bind.annotation.XmlElement;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -23,8 +21,7 @@ import org.jetbrains.annotations.NotNull;
 @TableGenerator(name="user", table="pk_sequence", allocationSize=1)
 // Table명 : user, id증가참조테이블 : pk_sequence, 증가사이즈 : 1
 @Table(name = "user")
-//@Cacheable
-//@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONE)
 public class User {
 
 	@Id
@@ -103,7 +100,7 @@ public class User {
 	}
 	
 	// 외래키
-//	@Cache(usage = CacheConcurrencyStrategy.NONE)
+	@Cache(usage = CacheConcurrencyStrategy.NONE)
 	@OneToMany(mappedBy="user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Phone> phoneList;
 
